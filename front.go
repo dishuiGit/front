@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"github.com/BurntSushi/toml"
 	"io"
 	"strings"
 
@@ -141,4 +142,14 @@ func YAMLHandler(front string) (map[string]interface{}, error) {
 		return nil, err
 	}
 	return out, nil
+}
+
+
+func TOMLHandler(front string) (map[string]interface{}, error) {
+	var rst interface{}
+	err := toml.Unmarshal([]byte(front), &rst)
+	if err != nil {
+		return nil, err
+	}
+	return rst.(map[string]interface{}), nil
 }
